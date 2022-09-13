@@ -27,14 +27,15 @@ player_spells = [fire, thunder, blizzard, quake, cure, viagra]
 player_items = [{"item":potion,"quantity":5}, {"item":hipotion,"quantity":10},
                 {"item":superpotion, "quantity":20}, {"item":elixer, "quantity":2},
                 {"item":hielixer, "quantity":9},{"item":grenade, "quantity":1}]
+enemy_spells = [fire, thunder, blizzard, quake, cure, viagra]
 
 player1 = Person("Jon :",4360, 165, 400, 34, player_spells, player_items)
 player2 = Person("Ned :",4650, 195, 400, 34, player_spells, player_items)
 player3 = Person("Rafa:",4560, 105, 130, 34, player_spells, player_items)
 
-enemy1 = Person("Magi:", 12200, 995, 545, 25, player_spells, player_items)
-enemy2 = Person("Mogu:", 12200, 34, 845, 25, player_spells, player_items)
-enemy3 = Person("Boni:", 12200, 94, 945, 232, player_spells, player_items)
+enemy1 = Person("Magi:", 12200, 995, 545, 25, enemy_spells, player_items)
+enemy2 = Person("Mogu:", 12200, 34, 845, 25, enemy_spells, player_items)
+enemy3 = Person("Boni:", 12200, 94, 945, 232, enemy_spells, player_items)
 
 players = [player1, player2, player3]
 enemies = [enemy1, enemy2, enemy3]
@@ -130,34 +131,48 @@ while running:
                 if enemies[enemy].get_hp() == 0:
                     print(enemies[enemy].name + " has died")
                     del enemies[enemy]
-
-    enemy_choice = 1
-    target = random.randrange(0,3)
-    enemy_dmg = enemies[0].generate_damage()
-
-    players[target].take_damage(enemy_dmg)
-    print("Enemy attacks for", enemy_dmg, "Player HP:", player.get_hp())
-
-
-    print("Your HP:",bcolors.OKGREEN + str(player.get_hp()) + "/" + str(player.get_max_hp())+ bcolors.ENDC + "\n")
-    print("Your MP:",bcolors.OKBLUE + str(player.get_mp())+ "/" + str(player.get_max_mp())+ bcolors.ENDC + "\n")
-
+#check if battle is over
     defeated_enemies = 0
     defeated_players = 0
 
     for enemy in enemies:
-        if enemy.get_hp()==0:
+        if enemy.get_hp() == 0:
             defeated_enemies += 1
 
     for player in players:
-        if player.get_hp ==0:
+        if player.get_hp == 0:
             defeated_players += 1
-
-
+#check is player won
     if defeated_enemies == 2:
         print(bcolors.OKGREEN + "You win!" + bcolors.ENDC)
         running = False
-
+#check if ennemy won
     elif defeated_players == 2:
         print(bcolors.FAIL + "Your enemies have defeated you!" + bcolors.ENDC)
         running = False
+
+    print("Your HP:",bcolors.OKGREEN + str(player.get_hp()) + "/" + str(player.get_max_hp())+ bcolors.ENDC + "\n")
+    print("Your MP:",bcolors.OKBLUE + str(player.get_mp())+ "/" + str(player.get_max_mp())+ bcolors.ENDC + "\n")
+
+#Ennemy attack phase
+    for enemy in enemies:
+        enemy_choice = random.randrange(0,3)
+
+        if enemy_choice == 0:
+            #chose attack
+            target = random.randrange(0,3)
+            enemy_dmg = enemies[0].generate_damage()
+            players[target].take_damage(enemy_dmg)
+            print(enemy.name.replace("", "") + " attacks "+ players[target].name.replace(" ", " ")+ "for", enemy_dmg)
+
+        elif enemy_choice ==1:
+            spell, magic_dmg = enemy.choose_enemy_spell()
+            enemy.reduce_mp(spell.cost)
+            print("Enemy chose", spell, "damage is", magic_dmg)
+
+
+
+
+
+
+
