@@ -4,13 +4,13 @@ from classes.inventory import Item
 
 
 #Create black magic
-fire= Spell("Fire", 10, 100, "black")
-thunder= Spell("Thunder", 24, 100, "black")
-blizzard= Spell("Blizzard", 10, 100, "black")
-quake= Spell("Quake", 34, 100, "black")
+fire= Spell("Fire", 25, 100, "black")
+thunder= Spell("Thunder", 25, 100, "black")
+blizzard= Spell("Blizzard", 40, 100, "black")
+quake= Spell("Quake", 15, 100, "black")
 
 #Create white magic
-cure = Spell("Cure", 15, 120, "white")
+cure = Spell("Cure", 55, 120, "white")
 viagra = Spell("Viagra", 30, 120, "white")
 
 #Create some Items
@@ -27,10 +27,10 @@ player_items = [{"item":potion,"quantity":5}, {"item":hipotion,"quantity":10},
                 {"item":superpotion, "quantity":20}, {"item":elixer, "quantity":2},
                 {"item":hielixer, "quantity":9},{"item":grenade, "quantity":1}]
 
-player1 = Person("Jon :",4360, 65, 60, 34, player_spells, player_items)
-player2 = Person("Ned :",4650, 65, 60, 34, player_spells, player_items)
-player3 = Person("Rafa:",4560, 65, 60, 34, player_spells, player_items)
-enemy = Person("Magi:", 12200, 65, 45, 25, player_spells, player_items)
+player1 = Person("Jon :",4360, 165, 400, 34, player_spells, player_items)
+player2 = Person("Ned :",4650, 195, 400, 34, player_spells, player_items)
+player3 = Person("Rafa:",4560, 105, 130, 34, player_spells, player_items)
+enemy = Person("Magi:", 12200, 995, 545, 25, player_spells, player_items)
 
 players = [player1, player2, player3]
 
@@ -43,7 +43,7 @@ while running:
     print("================")
 
     print("\n")
-    print("Name                HP                        MP")
+    print("Name                   HP                                      MP")
 
     for player in players:
         player.get_stats()
